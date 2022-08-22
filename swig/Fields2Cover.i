@@ -32,6 +32,9 @@
 %ignore f2c::types::Geometries::begin;
 %ignore f2c::types::Geometries::end;
 %ignore f2c::types::EmptyDestructor;
+%ignore f2c::Transform::generateCoordTransf;
+%ignore f2c::Transform::createSptRef;
+%ignore f2c::Transform::createCoordTransf;
 
 %define DEFINE_GEOM_ALGS(alg)
   %extend f2c::types::Geometry {
