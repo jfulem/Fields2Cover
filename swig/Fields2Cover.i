@@ -153,6 +153,79 @@ EXTEND_ALGS(Point, rotateFromPoint)
 %include "fields2cover/utils/parser.h"
 %include "fields2cover/utils/visualizer.h"
 
+%template(plot) f2c::Visualizer::plot<f2c::types::Point>;
+%template(plot) f2c::Visualizer::plot<f2c::types::MultiPoint>;
+%template(plot) f2c::Visualizer::plot<f2c::types::LineString>;
+%template(plot) f2c::Visualizer::plot<f2c::types::LinearRing>;
+
+%ignore f2c::Transform::generateCoordTransf;
+%ignore f2c::Transform::createSptRef;
+%ignore f2c::Transform::createCoordTransf;
+%include "fields2cover/utils/transformation.h"
+
+
+
+%define DEFINE_GLOBAL_COSTS(class_name, alg)
+  %extend f2c::obj::class_name {
+    %template(alg) alg<F2CSwath>;
+    %template(alg) alg<F2CSwaths>;
+    %template(alg) alg<F2CSwathsByCells>;
+    %template(alg) alg<F2CCell>;
+    %template(alg) alg<F2CCells>;
+    %template(alg) alg<F2CRoute>;
+    %template(alg) alg<F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwath>;
+    %template(alg) alg<F2CCell, F2CSwaths>;
+    %template(alg) alg<F2CCell, F2CSwathsByCells>;
+    %template(alg) alg<F2CCells, F2CSwath>;
+    %template(alg) alg<F2CCells, F2CSwaths>;
+    %template(alg) alg<F2CCells, F2CSwathsByCells>;
+    %template(alg) alg<F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwath, F2CRoute>;
+    %template(alg) alg<F2CCell, F2CSwath, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwath, F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwaths, F2CRoute>;
+    %template(alg) alg<F2CCell, F2CSwaths, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwaths, F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwathsByCells, F2CRoute>;
+    %template(alg) alg<F2CCell, F2CSwathsByCells, F2CPath>;
+    %template(alg) alg<F2CCell, F2CSwathsByCells, F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwath, F2CRoute>;
+    %template(alg) alg<F2CCells, F2CSwath, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwath, F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwaths, F2CRoute>;
+    %template(alg) alg<F2CCells, F2CSwaths, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwaths, F2CRoute, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwathsByCells, F2CRoute>;
+    %template(alg) alg<F2CCells, F2CSwathsByCells, F2CPath>;
+    %template(alg) alg<F2CCells, F2CSwathsByCells, F2CRoute, F2CPath>;
+  }
+%enddef
+%define DEFINE_PATH_COSTS(class_name, alg)
+  %extend f2c::obj::class_name {
+    %template(alg) alg<F2CPoint, F2CPoint>;
+    %template(alg) alg<F2CPoint, double, F2CPoint>;
+    %template(alg) alg<F2CPoint, double, F2CPoint, double>;
+    %template(alg) alg<F2CPoint, F2CPoint, double>;
+    %template(alg) alg<F2CSwath, F2CPoint>;
+    %template(alg) alg<F2CSwath, F2CSwath>;
+    %template(alg) alg<F2CSwath, F2CPoint, double>;
+    %template(alg) alg<F2CPoint, F2CSwath>;
+    %template(alg) alg<F2CPoint, double, F2CSwath>;
+    %template(alg) alg<std::vector<F2CPoint>>;
+    %template(alg) alg<F2CMultiPoint>;
+    %template(alg) alg<F2CSwath, F2CMultiPoint>;
+    %template(alg) alg<F2CSwaths, F2CMultiPoint>;
+    %template(alg) alg<F2CMultiPoint, F2CSwath>;
+    %template(alg) alg<F2CMultiPoint, F2CSwaths>;
+    %template(alg) alg<F2CSwath>;
+    %template(alg) alg<F2CSwaths>;
+    %template(alg) alg<F2CRoute>;
+    %template(alg) alg<F2CPath>;
+  }
+%enddef
+
+%rename(OBJ_GlobalObjective) f2c::obj::GlobalObjective;
 %include "fields2cover/objectives/global_objective.h"
 DEFINE_GLOBAL_COSTS(GlobalObjective, computeCostWithMinimizingSign)
 
